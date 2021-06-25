@@ -31,8 +31,7 @@
 	<!-- base-package하위의 어노테이션을 검색/처리 @Component, @Autowired, @Controller, @Service... -->
 	<context:component-scan base-package="com.kh.spring" />
 	
-	<!-- #9. 
-ptor 등록 -->
+	<!-- #9. interceptor 등록 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
@@ -43,10 +42,12 @@ ptor 등록 -->
 		<interceptor>
 			<mapping path="/member/**"/>
 			<mapping path="/board/**"/>
+			<mapping path="/ws/stomp.do"/>
 			<exclude-mapping path="/member/memberLogin.do"/>
 			<exclude-mapping path="/member/memberEnroll.do"/>
 			<exclude-mapping path="/member/checkIdDuplicate*.do"/>
 			<exclude-mapping path="/board/boardList.do"/>
+			<exclude-mapping path="/board/searchTitle.do"/>
 			<beans:bean
 				id="loginInterceptor"
 				class="com.kh.spring.common.interceptor.LoginInterceptor"/>

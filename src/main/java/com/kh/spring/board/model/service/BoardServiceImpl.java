@@ -83,8 +83,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<String> selectBoardTitleList() {
-		return boardDao.selectBoardTitleList();
+	public List<Board> searchTitle(String searchTitle) {
+		return boardDao.searchTitle(searchTitle);
 	}
 
 

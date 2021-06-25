@@ -29,4 +29,6 @@ public interface BoardDao {
 
 	List<String> selectBoardTitleList();
 
+	List<Board> searchTitle(String searchTitle);
+
 }

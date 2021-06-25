@@ -236,21 +236,14 @@ public class BoardController {
 
 	@GetMapping("/searchBoard.do")
 	public ResponseEntity<Map<String, Object>> searchBoard(
-			@RequestParam String search
+			@RequestParam String searchTitle
 			) {
-		//1. 업무로직
-		List<Board> resultList = new ArrayList<>();
-
-		//2. map에 요소 저장후 리턴
-		List<Board> boardList = boardService.selectBoardList();
-
-		for(Board board : boardList) {
-			if(board.getTitle().contains(search))
-				resultList.add(board);
-		}
-
+		//1. 업무로직 : 검색어로 board 조회
+		List<Board> list = boardService.searchTitle(searchTitle);
+		log.debug("list = {}",list);
+		//2. map에 검색결과 담아서 저장
 		Map<String, Object> map = new HashMap<>();
-		map.put("resultList", resultList);
+		map.put("list", list);
 		
 		return ResponseEntity
 				.ok()

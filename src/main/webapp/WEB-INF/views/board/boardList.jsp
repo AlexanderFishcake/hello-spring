@@ -29,44 +29,45 @@ $(()=>{
 		location.href = "${pageContext.request.contextPath}/board/boardDetail.do?no="+no;
 	});
 
-    $( "#searchTitle" ).autocomplete({
-    	  source: function(request, response){
-			  //사용자입력값 전달 ajax 요청-> success함수 안에서 response호출
-    		  $.ajax({
-    			  url: "${pageContext.request.contextPath}/board/searchBoard.do",
-    			  data: {
-    				  search: request.term
-    			  },
-    			  
-    			  success: function(data){
-    				  //console.log(data.resultList);
-    				  
-     				  var arr = data.resultList;
-    				  arr = $.map(arr, function(board){
-    						 return{
-    							 label: board.title,	//노출텍스트
-    							 value: board.no	//내부적 처리될 값
-    						 } 
-    					  });
-    					  console.log(arr);
-    					  //콜백함수 호출
-    					  response(arr);
-    			  },
-    			  error: function(xhr,status,err){
-    				  console.log(xhr,status,err);
-    			  }
-    		  })
-    	  },
-    	  select: function(event, selected){
-        	  //여기가 선택했을때 = 검색 실행
+    $("#searchTitle").autocomplete({
+        source: function(request, response){
+			//사용자입력값 전달 ajax 요청-> success함수 안에서 response호출
+			$.ajax({
+				url: "${pageContext.request.contextPath}/board/searchBoard.do",
+				data: {
+					searchTitle: request.term
+				},
+				success(data){
+					console.log(data);
+					const {list} = data;
+					const arr = 
+					list.map(({no,title}) =>{
+						return{
+							label: title,
+							value: title,
+							no
+						}
+					});
+					console.log(arr);
+					response(arr);
+				},
+				error: function(xhr,status,err){
+					console.log(xhr,status,err);
+					}
+			})
+		},
+		select: function(event, selected){
     		  //console.log(event);
-    		  //console.log(selected.item.value);
-
-    		  location.href = "${pageContext.request.contextPath }/board/boardDetail.do?no="+selected.item.value;
+    		  //console.log(selected);
+    		  const {item: {no}} = selected;
+    		  location.href = "${pageContext.request.contextPath }/board/boardDetail.do?no="+no;
     	  },
     	  focus: function(event, focused){
     		  return false;
-    	  }
+    	  },
+    	  autoFocus: true //자동완성에 포커스두기
+    	  ,minLength: 3 //자동완성 시작되는 문자열 길이
+    	  
     });
 	    
 });

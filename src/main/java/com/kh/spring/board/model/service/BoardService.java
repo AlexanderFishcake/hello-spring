@@ -25,6 +25,6 @@ public interface BoardService {
 
 	Attachment selectOneAttachment(int no);
 
-	List<String> selectBoardTitleList();
+	List<Board> searchTitle(String searchTitle);
 
 }

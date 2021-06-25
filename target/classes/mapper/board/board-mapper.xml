@@ -116,10 +116,26 @@
 			no = #{no}
 	</select>
 	
-	<select id="selectBoardTitleList" resultType="string">
+	<select id="searchTitle" resultType="board">
 		select
-			title
+			*
 		from
 			board
+		where
+			title like '%' || #{searchTitle} || '%'
 	</select>
+	<!-- 시험용 임시 -->
+	<!-- <select id="searchNotice" resultMap="resultNotice">
+		select
+			*
+		from
+			notice
+		<where>
+			<if test="keyword!=''">
+			ntitle like '%' || #{keyword} || '%'
+			
+			or ncontent like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select> -->
 </mapper>
